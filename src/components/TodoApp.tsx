@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase } from "../supabase-client";
+import { Button, Input, Textarea, Card, Checkbox } from "./ui";
 
 // Edit Form Component
 const EditForm = ({
@@ -17,37 +18,30 @@ const EditForm = ({
 
   return (
     <div className="space-y-4">
-      <input
+      <Input
         type="text"
         value={editTitle}
         onChange={(e) => setEditTitle(e.target.value)}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         placeholder="Edit title..."
       />
-      <textarea
+      <Textarea
         value={editDescription}
         onChange={(e) => setEditDescription(e.target.value)}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
         placeholder="Edit description..."
         rows={2}
       />
       <div className="flex space-x-2">
-        <motion.button
+        <Button
           onClick={() => onSave(editTitle, editDescription)}
-          className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          variant="success"
+          size="sm"
+          icon="check"
         >
-          Save ✅
-        </motion.button>
-        <motion.button
-          onClick={onCancel}
-          className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Cancel ❌
-        </motion.button>
+          Save
+        </Button>
+        <Button onClick={onCancel} variant="secondary" size="sm" icon="x-mark">
+          Cancel
+        </Button>
       </div>
     </div>
   );
@@ -185,47 +179,40 @@ const TodoApp = () => {
 
         {/* Add Todo Form */}
         <motion.div
-          className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Title
-              </label>
-              <input
+          <Card className="mb-8" background="glass" padding="md">
+            <div className="space-y-4">
+              <Input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="Enter todo title..."
+                label="Title"
                 onKeyPress={(e) => e.key === "Enter" && addTodo()}
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description
-              </label>
-              <textarea
+              <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
                 placeholder="Enter description (optional)..."
+                label="Description"
                 rows={3}
               />
+              <Button
+                onClick={addTodo}
+                disabled={loading}
+                loading={loading}
+                variant="primary"
+                size="lg"
+                fullWidth
+                icon="plus"
+              >
+                Add Todo
+              </Button>
             </div>
-            <motion.button
-              onClick={addTodo}
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 disabled:opacity-50"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {loading ? "Adding..." : "Add Todo ➕"}
-            </motion.button>
-          </div>
+          </Card>
         </motion.div>
 
         {/* Todo List */}
@@ -234,85 +221,83 @@ const TodoApp = () => {
             {todos.map((todo, index) => (
               <motion.div
                 key={todo.id}
-                className={`bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border-l-4 ${
-                  todo.completed
-                    ? "border-green-500 opacity-75"
-                    : "border-blue-500"
-                }`}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ delay: 0.1 * index, duration: 0.4 }}
-                whileHover={{ scale: 1.02 }}
               >
-                {editingId === todo.id ? (
-                  // Edit Mode
-                  <EditForm
-                    todo={todo}
-                    onSave={saveEdit}
-                    onCancel={cancelEdit}
-                  />
-                ) : (
-                  // View Mode
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <motion.button
-                          onClick={() => toggleComplete(todo.id)}
-                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                            todo.completed
-                              ? "bg-green-500 border-green-500 text-white"
-                              : "border-gray-300 hover:border-green-500"
-                          }`}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          {todo.completed && "✓"}
-                        </motion.button>
-                        <h3
-                          className={`text-lg font-semibold ${
-                            todo.completed
-                              ? "line-through text-gray-500"
-                              : "text-gray-800"
-                          }`}
-                        >
-                          {todo.title}
-                        </h3>
-                      </div>
-                      {todo.description && (
-                        <p
-                          className={`text-gray-600 ml-9 ${
-                            todo.completed ? "line-through" : ""
-                          }`}
-                        >
-                          {todo.description}
+                <Card
+                  className={`border-l-4 ${
+                    todo.completed
+                      ? "border-green-500 opacity-75"
+                      : "border-blue-500"
+                  }`}
+                  background="glass"
+                  padding="md"
+                  hover
+                >
+                  {editingId === todo.id ? (
+                    // Edit Mode
+                    <EditForm
+                      todo={todo}
+                      onSave={saveEdit}
+                      onCancel={cancelEdit}
+                    />
+                  ) : (
+                    // View Mode
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <Checkbox
+                            checked={todo.completed}
+                            onChange={() => toggleComplete(todo.id)}
+                            size="md"
+                          />
+                          <h3
+                            className={`text-lg font-semibold ${
+                              todo.completed
+                                ? "line-through text-gray-500"
+                                : "text-gray-800"
+                            }`}
+                          >
+                            {todo.title}
+                          </h3>
+                        </div>
+                        {todo.description && (
+                          <p
+                            className={`text-gray-600 ml-9 ${
+                              todo.completed ? "line-through" : ""
+                            }`}
+                          >
+                            {todo.description}
+                          </p>
+                        )}
+                        <p className="text-xs text-gray-400 ml-9 mt-2">
+                          Created:{" "}
+                          {new Date(todo.created_at).toLocaleDateString()}
                         </p>
-                      )}
-                      <p className="text-xs text-gray-400 ml-9 mt-2">
-                        Created:{" "}
-                        {new Date(todo.created_at).toLocaleDateString()}
-                      </p>
+                      </div>
+                      <div className="flex space-x-2 ml-4">
+                        <Button
+                          onClick={() => startEdit(todo)}
+                          variant="primary"
+                          size="sm"
+                          icon="pencil"
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          onClick={() => deleteTodo(todo.id)}
+                          variant="danger"
+                          size="sm"
+                          icon="trash"
+                        >
+                          Delete
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex space-x-2 ml-4">
-                      <motion.button
-                        onClick={() => startEdit(todo)}
-                        className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        Edit ✏️
-                      </motion.button>
-                      <motion.button
-                        onClick={() => deleteTodo(todo.id)}
-                        className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        Delete 🗑️
-                      </motion.button>
-                    </div>
-                  </div>
-                )}
+                  )}
+                </Card>
               </motion.div>
             ))}
           </AnimatePresence>

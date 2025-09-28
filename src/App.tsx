@@ -6,13 +6,9 @@ import {
   useParams,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Auth from "./components/Auth";
+import { Auth, TodoApp } from "./components";
 import { supabase } from "./supabase-client";
-import TodoApp from "./components/TodoApp";
-import Hero from "./screens/hero";
-import TargetsPage from "./screens/targets";
-import ActionPage from "./screens/action";
-import ActivityFeed from "./screens/activity";
+import { Hero, TargetsPage, ActionPage, ActivityFeed } from "./screens";
 
 interface Session {
   user: {

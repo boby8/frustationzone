@@ -1,86 +1,96 @@
 import { motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/ui";
 
 function Hero() {
-  return (
-    <motion.div
-      className="hero relative bg-purple-200 p-8 rounded-2xl text-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
-      <motion.h1
-        className="text-4xl font-bold text-gray-800 mb-4"
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-      >
-        Kick Your Stress Away!
-      </motion.h1>
+  const navigate = useNavigate();
 
-      <motion.button
-        className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-2xl text-xl font-bold hover:shadow-lg transition-all duration-300"
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 1, duration: 0.8 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => (window.location.href = "/targets")}
-      >
-        Start Kicking 🚀
-      </motion.button>
-      {/* Floating bubbles */}
-      <motion.div
-        className="absolute top-4 left-4 w-8 h-8 bg-white/30 rounded-full"
-        animate={{
-          y: [0, -20, 0],
-          x: [0, 10, 0],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute top-8 right-8 w-6 h-6 bg-white/40 rounded-full"
-        animate={{
-          y: [0, -15, 0],
-          x: [0, -8, 0],
-        }}
-        transition={{
-          duration: 2.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 0.5,
-        }}
-      />
-      <motion.div
-        className="absolute bottom-6 left-12 w-4 h-4 bg-white/50 rounded-full"
-        animate={{
-          y: [0, -12, 0],
-          x: [0, 6, 0],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1,
-        }}
-      />
-      <motion.div
-        className="absolute bottom-4 right-4 w-10 h-10 bg-white/20 rounded-full"
-        animate={{
-          y: [0, -25, 0],
-          x: [0, -12, 0],
-        }}
-        transition={{
-          duration: 3.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 0.8,
-        }}
-      />
-    </motion.div>
+  return (
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),transparent_50%)]"></div>
+      </div>
+
+      {/* Floating Elements */}
+      <div className="absolute inset-0">
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-purple-400/30 rounded-full"
+            style={{
+              left: `${20 + i * 15}%`,
+              top: `${30 + (i % 2) * 40}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.3, 0.8, 0.3],
+            }}
+            transition={{
+              duration: 3 + i * 0.5,
+              repeat: Infinity,
+              delay: i * 0.5,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+        <div className="text-center max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.h1
+              className="text-5xl md:text-7xl font-bold text-white mb-6"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Frustration Zone
+              </span>
+            </motion.h1>
+
+            <motion.p
+              className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              Release your stress, kick your problems, and find your inner peace
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => navigate("/targets")}
+              icon="rocket"
+            >
+              Start Kicking
+            </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => navigate("/todos")}
+              icon="plus"
+            >
+              Manage Tasks
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+    </div>
   );
 }
 
