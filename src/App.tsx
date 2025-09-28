@@ -96,8 +96,8 @@ function AppContent() {
   return (
     <Router>
       <div className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100">
-        {/* Header with user info and sign out */}
-        <div className="flex justify-between items-center p-4 bg-white/80 backdrop-blur-sm shadow-sm">
+        {/* Sticky Header with user info and sign out */}
+        <div className="sticky top-0 z-50 flex justify-between items-center p-4 bg-white/90 backdrop-blur-md shadow-lg border-b border-white/20">
           <h1 className="text-2xl font-bold text-gray-800">
             Frustration Zone 😡
           </h1>
