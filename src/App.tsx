@@ -56,7 +56,7 @@ function ActionPageWrapper() {
       target={target}
       onActionComplete={(action) => {
         console.log(`${userInitials} ${action}ed ${target.name}`);
-        navigate("/activity");
+        // Don't navigate automatically - let user stay and continue actions
       }}
       onBack={() => navigate("/targets")}
     />

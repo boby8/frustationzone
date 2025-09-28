@@ -32,7 +32,7 @@ function ActionPage({ target, onActionComplete, onBack }: ActionPageProps) {
     setTimeout(() => {
       setIsAnimating(false);
       onActionComplete(action.id);
-    }, 2000);
+    }, 500); // Reduced time for faster feedback
   };
 
   return (
@@ -143,6 +143,48 @@ function ActionPage({ target, onActionComplete, onBack }: ActionPageProps) {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Continue Actions Message */}
+        <motion.div
+          className="text-center mt-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <p className="text-lg text-gray-600">
+            Keep going! You can perform as many actions as you want.
+            <br />
+            <span className="text-sm text-gray-500">
+              Each action will be logged in your activity feed.
+            </span>
+          </p>
+        </motion.div>
+
+        {/* Navigation Buttons */}
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <motion.button
+            onClick={() => (window.location.href = "/activity")}
+            className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-semibold"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            View Activity Feed
+          </motion.button>
+
+          <motion.button
+            onClick={onBack}
+            className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-semibold"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Choose Different Target
+          </motion.button>
+        </motion.div>
       </motion.div>
     </div>
   );
