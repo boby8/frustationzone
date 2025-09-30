@@ -113,16 +113,11 @@ function AppContent() {
   return (
     <Router>
       <div className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100">
-        {/* Background Pattern */}
-
         {/* Sticky Header with user info and sign out */}
         <div className="sticky top-0 z-50 flex justify-between items-center p-4 bg-white/90 backdrop-blur-md shadow-lg border-b border-white/20">
           <h1 className="text-2xl font-bold text-gray-800">
             Frustration Zone 😡
           </h1>
-          <div className="absolute inset-0 bg-amber-400">
-            <button>Let me Remove u</button>
-          </div>
           <div className="flex items-center space-x-4">
             <span className="text-gray-600">Welcome, {session.user.email}</span>
             <button
