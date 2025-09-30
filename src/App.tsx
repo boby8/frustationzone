@@ -21,14 +21,31 @@ interface Session {
 
 // Target data (moved here to be accessible from ActionPage)
 const targets = [
-  { id: "boss", name: "Boss", avatar: "👔", color: "bg-red-100" },
-  { id: "client", name: "Client", avatar: "💼", color: "bg-blue-100" },
-  { id: "monday", name: "Monday", avatar: "😴", color: "bg-gray-100" },
-  { id: "exams", name: "Exams", avatar: "📚", color: "bg-yellow-100" },
+  { id: "monday", name: "Monday Blues", avatar: "😴", color: "bg-gray-100" },
+  { id: "deadlines", name: "Deadlines", avatar: "⏰", color: "bg-red-100" },
   { id: "traffic", name: "Traffic", avatar: "🚗", color: "bg-orange-100" },
-  { id: "ex", name: "Ex", avatar: "💔", color: "bg-pink-100" },
-  { id: "taxes", name: "Taxes", avatar: "💰", color: "bg-green-100" },
-  { id: "bugs", name: "Bugs", avatar: "🐛", color: "bg-purple-100" },
+  { id: "bugs", name: "Code Bugs", avatar: "🐛", color: "bg-purple-100" },
+  { id: "meetings", name: "Meetings", avatar: "📋", color: "bg-blue-100" },
+  { id: "weather", name: "Bad Weather", avatar: "⛈️", color: "bg-slate-100" },
+  {
+    id: "internet",
+    name: "Slow Internet",
+    avatar: "📶",
+    color: "bg-yellow-100",
+  },
+  {
+    id: "forgetfulness",
+    name: "Forgetfulness",
+    avatar: "🧠",
+    color: "bg-pink-100",
+  },
+  { id: "stress", name: "General Stress", avatar: "😤", color: "bg-green-100" },
+  {
+    id: "technology",
+    name: "Tech Problems",
+    avatar: "💻",
+    color: "bg-indigo-100",
+  },
 ];
 
 function ActionPageWrapper() {
